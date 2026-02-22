@@ -5,6 +5,8 @@
 # by Wilberth Barrantes
 # for CentOS / RHEL
 
+set -euo pipefail # exit on error, nounset, pipeline fail
+
 logfile="/var/log/user_administration.log"
 
 # Makes sure script is running with root privileges
@@ -13,19 +15,22 @@ check_root(){
 		echo "Error: Script must be run as root. Try: sudo $0"
 		exit 1
 	fi
+	return 0
 }
 
 # Saves each action to a logfile
 log_action(){
-	echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$logfile"
+	echo "$(date '+%Y-%m-%d %H:%M:%S') - by ${SUDO_USER:-$(whoami)} on $(hostname) - $1" >> "$logfile"
+	return 0
 }
 
 # Usage syntax
 correct_usage(){
 	echo "How to Use:"
-	echo "$0 -u username [-g group] [-s shell] [-e expiration_date] [--sudo]"
+	echo "$0 -u username [-g group] [-s shell] [-e expiration_date] [--sudo] [-h]"
 	echo "$0 -f file_with_usernames" # For user bulk creation from txt file
 	exit 1
+	return 0
 }
 
 # User name validation
@@ -57,6 +62,7 @@ user_creation(){
 	fi
 
 	if id "$username" &>/dev/null; then
+		echo "Advise: Skipping $username, this user already exists"
 		return 1
 	fi
 
@@ -96,10 +102,17 @@ user_creation(){
 
 	log_action "User $username created."
 	echo "User $username created."
+	
+	return 0
 }
 
 check_root
 
+username=""
+groupname=""
+shell=""
+expdate=""
+file=""
 sudo_con=false
 
 while [[ $# -gt 0 ]]; do
@@ -110,6 +123,7 @@ while [[ $# -gt 0 ]]; do
         -e) expdate="$2"; shift 2 ;;
         --sudo) sudo_con=true; shift ;;
         -f) file="$2"; shift 2 ;;
+	-h|--help) correct_usage ;;
         *) correct_usage ;;
     esac
 done
@@ -122,7 +136,8 @@ if [ -n "$file" ]; then
 	while read -u 3 -r user; do # -u and 3 should separate from stdin
 	    user_clean=$(echo "$user" | xargs) # Trims whitespaces on the txt
 	if [[ -n "$user_clean" ]]; then
-	    user_creation "$user_clean" "$groupname" "$shell" "$expdate" "$sudo_con"
+	    # true at the end so script don't end for one fail on bulk creation
+	    user_creation "$user_clean" "$groupname" "$shell" "$expdate" "$sudo_con" || true
 	fi
     done 3< "$file"
 elif [ -n "$username" ]; then
@@ -130,3 +145,4 @@ elif [ -n "$username" ]; then
 else
     correct_usage
 fi
+
