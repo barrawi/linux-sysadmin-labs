@@ -135,10 +135,11 @@ if [ -n "$file" ]; then
 	fi
 	while read -u 3 -r user; do # -u and 3 should separate from stdin
 	    user_clean=$(echo "$user" | xargs) # Trims whitespaces on the txt
-	if [[ -n "$user_clean" ]]; then
-	    # true at the end so script don't end for one fail on bulk creation
-	    user_creation "$user_clean" "$groupname" "$shell" "$expdate" "$sudo_con" || true
+	if [[ -z "$user_clean" || "$user_clean" == \#* ]]; then # avoids reading commented lines
+	    continue
 	fi
+	# true at the end so script don't end for one fail on bulk creation
+	user_creation "$user_clean" "$groupname" "$shell" "$expdate" "$sudo_con" || true
     done 3< "$file"
 elif [ -n "$username" ]; then
     user_creation "$username" "$groupname" "$shell" "$expdate" "$sudo_con"
