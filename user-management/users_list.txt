@@ -1,0 +1,14 @@
+# Engineering Team
+lvelasquez
+jdoe
+asmith
+
+# Marketing Team
+mgarcia
+# Script will trim these spaces
+    spark        
+btravers
+
+# Temporary Contractors
+temp_user01
+temp_user02
