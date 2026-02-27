@@ -50,7 +50,7 @@ I manually verified the script's output with **Gemini**, **DeepSeek**, and **Cha
 #### Cross-Model Comparison
 | Gemini | DeepSeek | ChatGPT |
 | :--- | :--- | :--- |
-| ![Gemini Test](docs/images/gemini.png) | ![DeepSeek Test](docs/images/deepseek.png) | ![ChatGPT Test](docs/images/chatgpt.png) |
+| ![Gemini Test](![image alt](docs/images/gemini.png) | ![DeepSeek Test](![image alt](docs/images/deepseek.png)) | ![ChatGPT Test](![image alt](docs/images/chatgpt.png)) |
 
 ## AI-Assisted Development & QA
 Consistent with a collaborative DevOps workflow, this tool was developed as a joint effort between human architecture and AI logic:
