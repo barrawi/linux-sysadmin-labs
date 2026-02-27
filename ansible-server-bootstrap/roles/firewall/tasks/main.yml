@@ -1,0 +1,31 @@
+--- 
+
+# Even though installation is verified in the common role autonomy it will be kept here as well
+- name: Ensure firewalld is installed and running
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
+
+- name: Start and enable firewalld
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Permit traffic for specific services
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes # reload firewall rule
+  loop:
+    - ssh
+    - http
+
+- name: Permit traffic for custom SSH port (if not 22)
+  ansible.posix.firewalld:
+    port: "{{ ssh_port }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: ssh_port != 22

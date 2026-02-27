@@ -18,6 +18,8 @@ This project automates the "Day 0" setup to ensure:
 ## Project Structure
 * `roles/common`: Updates dnf packages and installs core utilities.
 * `roles/users`: Creates a `devops` user, manages SSH authorized keys, and configures sudoers.
+* `roles/ssh_hardening`: Secures the OpenSSH daemon using a Jinja2 template to enforce key based authentication, disable root login, and prevent brute force attacks via password disablement. 
+* `roles/firewall`: Manages the system perimeter by ensuring the firewalld service is active and properly configured to allow only authorized traffic, with built in support for non-standard SSH ports.
 
 ## Setup
 * **Secrets**: Create an encrypted vault file to store your sudo password.
