@@ -10,3 +10,12 @@ __pycache__/
 
 # Ignore vault password
 .vault_pass
+
+# Ignore the generated context file
+content_exporter.txt
+
+# Ignore local virtual environments if kept inside this folder
+venv/
+.venv/
+
+

@@ -20,7 +20,7 @@
   # make sure file exists in line
   ansible.builtin.lineinfile:
     # dedicated file for this rule
-    path: /etc/sudoers.d/wheel_passwordless
+    path: /etc/sudoers.d/wheel_nopass
     line: "%wheel ALL=(ALL) NOPASSWD: ALL" # allowheel to run with no password
     create: yes # if file not exist then create
     mode: '0440' # file permissions   
