@@ -26,3 +26,9 @@
     state: started
     enabled: yes
 
+# set up for dry run
+- name: Verify Tailscale version
+  ansible.builtin.command: tailscale --version
+  register: tailscale_version_output
+  changed_when: false
+  check_mode: no # run even on check mode

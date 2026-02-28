@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Managed by Ansible</title>
 </head>
+
 <body>
     <h1>Server: {{ inventory_hostname }}</h1>
     <p>Deployment Status: <strong>Successful</strong></p>
     <p>Deployed via Ansible automation.</p>
     <hr>
-    <p>Date: {{ ansible_date_time.date }}</p>
-    <p>Time: {{ ansible_date_time.time }}</p>
+    <p>Date: {{ ansible_facts['date_time']['date']}}</p>
+    <p>Time: {{ ansible_facts['date_time']['time'] }}</p>
+    <p>OS Distribution: {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}</p>
+    <p>Private IP: {{ ansible_facts['default_ipv4']['address'] }}</p>
 </body>
+
 </html>

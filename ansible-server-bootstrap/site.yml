@@ -4,9 +4,21 @@
   become: yes
 
   roles:
-    - common # system preparation
-    - tailscale # install and configure tailscale vpn
-    - users # create secure administrative user & add ssh key
-    - ssh_hardening # disable passwords now that key is confirmed
-    - firewall # verifies that firewalld is installed and running, add rule: open ports 22 and 80
-    - nginx # deploys a web server
+    - role: common # system preparation
+      tags: [ common, system]
+
+    - role: users # create secure administrative user & add ssh key
+      tags: [ users, security ] 
+
+    - role: ssh_hardening # disable passwords now that key is confirmed
+      tags: [ ssh, security ]  
+
+    - role: firewall # verifies that firewalld is installed and running, add rule: open ports 22 and 80
+      tags: [ firewall, network ]
+
+    - role: tailscale # install and configure tailscale vpn
+      tags: [ tailscale, vpn, network ]
+    
+    - role: nginx # deploys a web server
+      tags: [ nginx, webserver ]
+    

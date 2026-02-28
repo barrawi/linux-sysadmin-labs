@@ -30,7 +30,7 @@ This project automates the "Day 0" setup to ensure:
 ## How to Run
 1. **Clone the Repo**: `git clone https://github.com/youruser/linux-sysadmin-labs.git`
 2. **Setup Inventory**: Update `inventory/hosts.ini` with your VM's IP address.
-3. **Vault Setup**: Ensure your `vault.yml` contains your `ansible_become_pass` and `tailscale_auth_key`.
+3. **Vault Setup**: Ensure your `all.yml` contains your `ansible_become_pass` and `tailscale_auth_key`.
 4. **Execute the Playbook**:
    ```bash
    ansible-playbook -i inventory/hosts.ini site.yml --ask-vault-pass
