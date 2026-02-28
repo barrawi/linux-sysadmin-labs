@@ -14,14 +14,3 @@
       - firewalld
     state: present # only install if not installed already
 
-- name: Install Tailscale on CentOS # setting up a vpn
-  ansible.builtin.shell: curl -fsSL https://tailscale.com/install.sh | sh 
-
-- name: Start Tailscale
-  ansible.builtin.service:
-    name: tailscaled
-    state: started
-    enabled: yes
-
-- name: Authenticate Tailscale
-  ansible.builtin.command: tailscale up --authkey={{ tailscale_key }}

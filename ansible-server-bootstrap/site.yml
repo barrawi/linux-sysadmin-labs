@@ -5,6 +5,7 @@
 
   roles:
     - common # system preparation
+    - tailscale # install and configure tailscale vpn
     - users # create secure administrative user & add ssh key
     - ssh_hardening # disable passwords now that key is confirmed
     - firewall # verifies that firewalld is installed and running, add rule: open ports 22 and 80

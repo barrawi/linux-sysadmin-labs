@@ -1,0 +1,28 @@
+---
+# Ensure packages are installed and signed by Tailscale
+- name: Add Tailscale GPG key # download id card
+  ansible.builtin.get_url:
+    url: "{{ tailscale_gpg_url }}"
+    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-tailscale
+    mode: '0644'
+
+- name: Add Tailscale repository # creates .repo in /etc/yum.repos.d/
+  ansible.builtin.yum_repository:
+    name: tailscale-stable
+    description: Tailscale stable repo
+    baseurl: "{{ tailscale_repo_url }}"
+    gpgcheck: yes  # install only if key matches
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tailscale"
+    enabled: yes
+
+- name: Install the Tailscale package
+  ansible.builtin.dnf:
+    name: tailscale
+    state: present
+
+- name: Enable and start the Tailscale service 
+  ansible.builtin.systemd:
+    name: tailscaled
+    state: started
+    enabled: yes
+
