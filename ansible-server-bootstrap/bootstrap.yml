@@ -1,0 +1,22 @@
+---
+- name: Bootstrap New RHEL Nodes
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure Avahi and dependencies are installed
+      ansible.builtin.dnf:
+        name: [avahi, nss-mdns]
+        state: present
+
+    - name: Start and Enable Avahi Daemon
+      ansible.builtin.service:
+        name: avahi-daemon
+        state: started
+        enabled: yes
+
+    - name: Open Firewall for mDNS
+      ansible.posix.firewalld:
+        service: mdns
+        permanent: yes
+        state: enabled
+        immediate: yes            

@@ -1,0 +1,13 @@
+---
+env_label: "production"
+nginx_port: 80
+allow_root_ssh: "no"
+
+env_specific_package:
+  - cockpit # monitor server health
+  - logwatch # log analyzer
+  - setroubleshoot-server # helps debug live
+
+# some web variables for prod inventory
+app_env: "Production"
+app_debug: false # no nerd data showing

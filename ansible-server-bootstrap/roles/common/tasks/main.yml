@@ -3,6 +3,7 @@
   ansible.builtin.dnf: # RHEL manager
     name: "*"
     state: latest # tells Ansible to update if not latest version
+    disable_gpg_check: yes # can be removed later, rn rhel 10 cant pass the check
 
 - name: Install essential packages
   ansible.builtin.dnf: # RHEL manager
@@ -14,3 +15,8 @@
       - firewalld
     state: present # only install if not installed already
 
+- name: Install env specific Utilities
+  ansible.builtin.dnf:
+    name: "{{ env_specific_packages | default([]) }}"
+    state: present
+  when: env_specific_packages is defined

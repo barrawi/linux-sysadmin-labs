@@ -1,0 +1,13 @@
+--- 
+env_label: "development"
+nginx_port: 8080
+allow_root_ssh: "yes"
+
+env_specific_packages:
+  - htop # process monitor
+  - tcpdump # network sniffer
+  - nmap # port scanner
+
+# some web variables for dev inventorie
+app_env: "Development"
+app_debug: true # nerd data

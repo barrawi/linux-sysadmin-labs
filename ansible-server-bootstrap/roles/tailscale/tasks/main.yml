@@ -21,10 +21,16 @@
     state: present
 
 - name: Enable and start the Tailscale service 
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: tailscaled
     state: started
     enabled: yes
+
+- name: Set Tailscale up
+  ansible.builtin.command:
+    cmd: "tailscale up --authkey={{ tailscale_key }}"
+  register: tailscale_up
+  changed_when: "'already authenticated' not in tailscale_up.stderr"
 
 # set up for dry run
 - name: Verify Tailscale version

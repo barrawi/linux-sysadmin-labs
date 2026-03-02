@@ -1,3 +1,4 @@
 ---
-tailscale_gpg_url: "https://pkgs.tailscale.com/stable/centos/9/repo.gpg"
-tailscale_repo_url: "https://pkgs.tailscale.com/stable/centos/9/$basearch" # $basearch detecs if server is x86 or ARM
+# repo for 10 did not work so I switched to 9
+tailscale_gpg_url: "https://pkgs.tailscale.com/stable/rhel/9/repo.gpg"
+tailscale_repo_url: "https://pkgs.tailscale.com/stable/rhel/9/$basearch" # $basearch detecs if server is x86 or ARM

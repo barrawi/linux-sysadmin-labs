@@ -8,12 +8,21 @@
     state: present # if user exists do not create
     password_lock: yes # no passwrod login only ssh key
 
-# setting up the Local File Lookup
-- name:
+- name: Create .ssh directory
+  ansible.builtin.file:
+    path: "/home/{{ admin_username }}/.ssh"
+    state: directory
+    owner: "{{ admin_username }}"
+    group: "{{ admin_username }}"
+    mode: '0700'
+
+# setting up the local file lookup
+- name: Set up authorized key for admin
   ansible.builtin.authorized_key:
     user: "{{ admin_username }}"
     state: present
     key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+    manage_dir: yes # avoid lockout  
 
 # passwordless sudo
 - name: Allow wheel users for passwordless sudo

@@ -12,28 +12,37 @@
     state: started
     enabled: yes
 
-- name: Permit traffic for specific services
+# Refined firewall logic
+- name: Permit SSH on the public network 
   ansible.posix.firewalld:
-    service: "{{ item }}"
-    permanent: yes
-    state: enabled
-    immediate: yes # reload firewall rule
-  loop:
-    - ssh
-    - http
-
-- name: Permit traffic for custom SSH port (if not 22)
-  ansible.posix.firewalld:
-    port: "{{ ssh_port }}/tcp"
+    service: ssh 
+    zone: public
     permanent: yes
     state: enabled
     immediate: yes
-  when: ssh_port != 22
 
-- name: Permit all traffic form Tailscale
+  # disabled on the public zone
+- name: Block HTTP on the public network # my ethernet and wifi
   ansible.posix.firewalld:
-    zone: trusted # highest permission
-    interface: tailscale0
+    service: http 
+    zone: public  
+    permanent: yes
+    state: disabled
+    immediate: yes
+
+- name: Bind Tailscale to trusted
+  ansible.posix.firewalld:
+    interface: tailscale0 
+    zone: trusted
     permanent: yes
     state: enabled
-    immediate: yes # apply changes live
+    immediate: yes
+  
+  # enabled on the trusted zone  
+- name: Permit HTTP traffic but ONLY via tailscale 
+  ansible.posix.firewalld:
+    service: http
+    zone: trusted
+    permanent: yes
+    state: enabled
+    immediate: yes

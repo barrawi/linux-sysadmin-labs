@@ -6,6 +6,8 @@
 </head>
 
 <body>
+    <h1>Welcome to the {{ app_env }} Server</h1>
+    <p>Hostname: {{ ansible_hostname }}</p>
     <h1>Server: {{ inventory_hostname }}</h1>
     <p>Deployment Status: <strong>Successful</strong></p>
     <p>Deployed via Ansible automation.</p>
@@ -14,6 +16,15 @@
     <p>Time: {{ ansible_facts['date_time']['time'] }}</p>
     <p>OS Distribution: {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}</p>
     <p>Private IP: {{ ansible_facts['default_ipv4']['address'] }}</p>
+    {% if app_debug %}
+    <div style="background-color: yellow; border: 1px solid black;">
+        <h3>DEBUG MODE ENABLED</h3>
+        <p>System Python: {{ ansible_python_version }}</p>
+        <p>Total Memory: {{ ansible_memtotal_mb }} MB</p>
+    </div>
+    {% else %}
+    <p>System Status: <span style="color: green;">Stable</span></p>
+    {% endif %}
 </body>
 
 </html>
