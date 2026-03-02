@@ -37,6 +37,27 @@ This project automates the "Day 0" setup to ensure:
    ```bash
    ansible-playbook -i inventories/dev/hosts.ini site.yml --ask-vault-pass
 
+**Important**: `bootstrap.yml` and `site.yml`
+
+* `bootstrap.yml`: The "Day 0" Script:
+Use this only once per new virtual machine instance.
+**When to use**: Immediately after the RHEL OS is installed and you have basic SSH access.
+**Purpose**: To install the "missing links" required for Ansible and modern networking to function correctly. 
+**Key Tasks**: 
+    * Installing Avahi and nss-mdns so you can reach the server via dev-vm01.local instead of tracking changing IP addresses. 
+    * Opening the mDNS port in the firewall to allow local hostname resolution.
+
+* `site.yml`: The "Day 1+" Script
+Use this for everything else and for all ongoing updates.
+**When to use**: 
+    1. Right after the bootstrap is finished to apply the full security stack. 
+    2. Whenever you change a configuration (e.g., adding a new user, updating Nginx templates, or rotating SSH keys). 
+**Purpose**: This is your "Single Source of Truth." It enforces your desired state across all roles. 
+**Key Roles Included**:
+    * Users & SSH Hardening: Locking down the server. 
+    * Firewall & Tailscale: Setting up the Zero-Trust network. 
+    * Nginx: Deploying the actual application or web content.
+
 ## Technical Challenges & Solutions
 
 ### The "Perfect Storm" SSH Lockout: 
