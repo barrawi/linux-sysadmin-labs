@@ -18,4 +18,5 @@ content_exporter.txt
 venv/
 .venv/
 
-
+# Ignore .env from docker
+.env

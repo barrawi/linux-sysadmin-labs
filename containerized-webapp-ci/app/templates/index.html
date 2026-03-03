@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Containerized WebApp | Enterprise Lab</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+
+        .env-tag {
+            background: #e2e2e2;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .status-up {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Container Deployment Status: <span class="status-up">UP</span></h1>
+        <hr>
+        <p><strong>Environment:</strong> <span class="env-tag">{{ data.environment }}</span></p>
+        <p><strong>Container Hostname:</strong> {{ data.hostname }}</p>
+        <p><strong>Internal IP:</strong> {{ data.ip_address }}</p>
+        <p><strong>Deployed At:</strong> {{ data.timestamp }}</p>
+        <p><strong>Debug Mode:</strong> {{ data.debug_mode }}</p>
+    </div>
+</body>
+
+</html>

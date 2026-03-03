@@ -17,6 +17,10 @@ include = {
     ".cfg",
     ".py",
     ".sh",
+    ".lua",
+    ".toml",
+    "Dockerfile",
+    ".env",
 }  # files to include
 no_include = {
     "password",
@@ -25,6 +29,7 @@ no_include = {
     "private_key",
     "ansible_become_pass",
     "ansible-vault",
+    "venv",
 }
 
 

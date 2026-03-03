@@ -1,0 +1,28 @@
+# Source Control
+.git
+.gitignore
+
+# Python artifacts
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Testing
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Secrets and Config
+.env
+*.swp
+*.bak
+
+# Documentation
+README.md
+docs/
