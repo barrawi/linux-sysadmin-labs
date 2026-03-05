@@ -12,6 +12,9 @@ on:
 jobs: 
   test-and-build:
     runs-on: ubuntu-latest # chosen VM 
+    defaults:
+      run:
+        working-directory: containerized-webapp-ci 
 
     steps:
       # grab code
