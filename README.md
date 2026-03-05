@@ -25,6 +25,10 @@ A Flask web application containerized with Docker and deployed through a fully a
 - **Test-Driven**: pytest test suite with fakeredis for isolated, dependency-free testing. Redis connection is injected via Flask config to keep test code fully separate from production code.
 - **Redis Integration**: Redis health check exposed via `/json` endpoint. Graceful fallback handling ensures the app never crashes when Redis is unavailable.
 - **Security**: Secrets managed via `.env` file, excluded from version control. Non root container user enforced at the Docker level.
+<img width="963" height="160" alt="image" src="https://github.com/user-attachments/assets/59e15a94-a736-46d3-b75a-0edfe1c2aa30" />
+
+*Multi-stage build reduced the final image size by 82% — from 1.55GB(my-webapp:v1) down to 286MB(webapp:prod) — by separating the build environment from the runtime image and using RHEL UBI9 minimal as the production base.*
+
 
 ---
 
@@ -74,7 +78,7 @@ A custom utility built to facilitate secure code auditing and AI collaboration.
 - Add automated deployment step to CI/CD pipeline (push to main → auto-deploy to server).
 - Expand test coverage with Testinfra for post deployment server validation.
 
---
+---
 
 ## AI-Assisted Development & Quality Assurance
 While this suite was architected and driven by me, I utilized AI as a collaborative tool for code revisioning, best practice auditing, and logic verification. This partnership allowed for a rigorous development cycle:
