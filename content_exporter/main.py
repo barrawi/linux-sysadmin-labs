@@ -22,6 +22,7 @@ include = {
     "Dockerfile",
     ".env",
     ".html",
+    ".github",
 }  # files to include
 no_include = {
     "password",
