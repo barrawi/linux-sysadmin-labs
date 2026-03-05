@@ -25,18 +25,25 @@ def index():
     metadata = {
         "hostname": socket.gethostname(),
         "ip_address": socket.gethostbyname(socket.gethostname()),
-        "environment": os.getenv("APP_ENV", "Development"),
+        "environment": os.getenv("FLASK_ENV", "Development"),
         "debug_mode": os.getenv("APP_DEBUG", "False"),
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
     return render_template("index.html", data=metadata)
 
 
+# use fake redis in tests, real redis in production
+def get_redis():
+    if app.config.get("REDIS_CLIENT"):
+        return app.config["REDIS_CLIENT"]
+    return cache
+
+
 @app.route("/json")
 def get_json():
     # to check redis status
     try:
-        redis_up = cache.ping()
+        redis_up = get_redis().ping()  # which redis to use
     except Exception:
         redis_up = False
 
@@ -45,7 +52,7 @@ def get_json():
         {
             "app": "containerized-webapp",
             "version": "1.0.0",
-            "enviroment": os.getenv("APP_ENV", "Development"),
+            "environment": os.getenv("FLASK_ENV", "Development"),
             "hostname": socket.gethostname(),
             "timestamp": datetime.now().isoformat(),
             "python_version": platform.python_version(),

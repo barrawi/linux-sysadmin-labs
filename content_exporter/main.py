@@ -21,6 +21,7 @@ include = {
     ".toml",
     "Dockerfile",
     ".env",
+    ".html",
 }  # files to include
 no_include = {
     "password",

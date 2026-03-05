@@ -34,4 +34,4 @@ volumes:
 # create a private network so the app and redis can talk securely
 networks: 
   backend:
-    driver: bridge # Fixed 'drivers' to 'driver'
+    driver: bridge 
