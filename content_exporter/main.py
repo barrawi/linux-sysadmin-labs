@@ -30,7 +30,6 @@ no_include = {
     "private_key",
     "ansible_become_pass",
     "ansible-vault",
-    "venv",
 }
 
 
@@ -41,7 +40,7 @@ def ignore_gitignore():
         # separate lines and return uncommented ones
         with open(".gitignore", "r") as f:
             for line in f:
-                line = line.strip()
+                line = line.strip().rstrip("/")  # so it ignores directories
                 if line and not line.startswith("#"):
                     patterns.add(line)
     return patterns
