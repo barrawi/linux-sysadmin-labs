@@ -150,5 +150,5 @@ Every AI generated suggestion was manually reviewed, tested in a sandbox environ
 This project is part of my DevOps / Automation Portfolio. I am constantly looking to refine my infrastructure patterns. If you have suggestions regarding compliance, image optimization, or CI/CD integration, your feedback is highly appreciated. Constructive conversations and professional networking are always welcome.
 
 ## Author
-Wilberth Barrantes - *DevOps / Automation Portfolio*
+Wilberth Barrantes - *DevOps / Automation Toolkit*
 

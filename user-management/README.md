@@ -76,4 +76,4 @@ While this suite was architected and driven by me, I utilized AI as a collaborat
 - The collaborative process was used to refine complex logic, such as the use of custom File Descriptor 3 for conflict free bulk processing.
 
 # Author
-Wilberth Barrantes - SysAdmin / DevOps portfolio Project.
+Wilberth Barrantes - SysAdmin / DevOps Toolkit.

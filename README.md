@@ -1,4 +1,4 @@
-# Linux SysAdmin & DevOps Portfolio Labs
+# Linux SysAdmin & DevOps Portfolio Toolkit
 This repository serves as a collection of labs and projects focused on Infrastructure-as-Code (IaC), Linux System Hardening, CI/CD Automation, and Containerization.
 
 The goal of these labs is to demonstrate a production-ready approach to managing Linux environments prioritizing security, idempotency, and comprehensive documentation
@@ -98,4 +98,4 @@ I am always looking to improve my workflows and code efficiency. If you have any
 ---
 
 # Author
-Wilberth Barrantes - SysAdmin / DevOps portfolio Project.
+Wilberth Barrantes - SysAdmin / DevOps Toolkit.

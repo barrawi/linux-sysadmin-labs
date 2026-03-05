@@ -60,4 +60,4 @@ Consistent with a collaborative DevOps workflow, this tool was developed as a jo
 * **Troubleshooting**: Utilized AI to debug `ModuleNotFoundError` issues related to internal IDE type-hinting to ensure the script remains dependency free.
 
 ## Author 
-Wilberth Barrantes — SysAdmin / DevOps Portfolio project
+Wilberth Barrantes — SysAdmin / DevOps Toolkit

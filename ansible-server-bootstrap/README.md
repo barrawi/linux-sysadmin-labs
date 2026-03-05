@@ -93,4 +93,4 @@ While this project was architected and driven by me, I utilized AI as a collabor
 - The collaborative process was used to refine the "Controller to Node" logic, specifically the secure lookup of local public keys to ensure zero hardcoded secrets in version control.
 
 # Author
-Wilberth Barrantes - SysAdmin / DevOps Portfolio Project
+Wilberth Barrantes - SysAdmin / DevOps Toolkit
