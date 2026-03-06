@@ -23,6 +23,7 @@ include = {
     ".env",
     ".html",
     ".github",
+    ".txt",
 }  # files to include
 no_include = {
     "password",

@@ -11,3 +11,7 @@ env_specific_packages:
 # some web variables for prod inventory
 app_env: "Production"
 app_debug: false # no nerd data showing
+
+app_deploy_dir: /opt/containerized-webapp-cicd
+dockerhub_username: "barrawi"
+app_port: 8000

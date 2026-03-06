@@ -1,0 +1,54 @@
+---
+
+- name: Remove old broken Docker repo if present
+  ansible.builtin.file:
+    path: /etc/yum.repos.d/download.docker.com_linux_rhel_docker-ce.add-repo.repo
+    state: absent 
+
+- name: Install podman and required dependencies
+  ansible.builtin.dnf:
+    name:
+      - podman
+      - python3-pip
+    state: present
+
+- name: Install podman-compose via pip
+  ansible.builtin.pip:
+    name: podman-compose
+    state: present
+
+- name: Start and enable podman socket
+  ansible.builtin.service:
+    name: podman.socket 
+    state: started
+    enabled: yes
+
+- name: Add admin user to systemd lingering
+  ansible.builtin.command:
+    cmd: loginctl enable-linger {{ admin_username }}
+    creates: /var/lib/systemd/linger/{{ admin_username }}
+
+- name: Create app directory
+  ansible.builtin.file:
+    path: "{{ app_deploy_dir }}"
+    state: directory
+    owner: "{{ admin_username }}"
+    group: "{{ admin_username }}"
+    mode: '0755'
+
+- name: Deploy docker-compose.yml to vm
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ app_deploy_dir }}/docker-compose.yml"
+    owner: "{{ admin_username }}"
+    group: "{{ admin_username }}"
+    mode: '0644'
+
+- name: Deploy .env to vm 
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ app_deploy_dir }}/.env"
+    owner: "{{ admin_username }}"
+    group: "{{ admin_username }}"
+    mode: '0600'
+

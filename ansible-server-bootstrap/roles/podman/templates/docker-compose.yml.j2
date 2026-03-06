@@ -1,0 +1,30 @@
+services:
+    webapp:
+    image: {{ dockerhub_username }}/containerized-webapp:latest
+    container_name: webapp-app
+    restart:  unless-stopped
+    ports:
+        - "{{ app_port }}: 5000"
+    env_file:
+        - .env 
+    dependes_on:
+        - cache
+    networks: 
+        - backend
+
+    cache:
+        image: redis:7-alpine
+        container_name: webapp-redis
+        restart: unless-stopped
+        volumes:
+            - redis_data:/data 
+        networks:
+            - backend 
+
+volumes:
+    redis_data:
+
+networks:
+    backend:
+        driver: bridge
+

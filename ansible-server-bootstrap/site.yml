@@ -22,3 +22,5 @@
     - role: nginx # deploys a web server
       tags: [ nginx, webserver ]
     
+    - role: podman # webapp container
+      tags: [ podman, containers ]
