@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 """
 Dynamic Ansible inventory using Tailscale API
 Returns all devices tagged with 'tag:prod' as a host group
