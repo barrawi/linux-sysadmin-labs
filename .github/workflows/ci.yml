@@ -61,7 +61,9 @@ jobs:
         env:
           TAILSCALE_API_KEY: ${{ secrets.TAILSCALE_API_KEY }}
         run: |
+          # move to ansible dir
           cd ../ansible-server-bootstrap
+          chmod +x inventories/tailscale_inventory.py
           echo "${{ secrets.VM_SSH_KEY }}" > /tmp/deploy_key
           echo "${{ secrets.ANSIBLE_VAULT_PASS }}" > /tmp/vault_pass
           chmod 600 /tmp/deploy_key

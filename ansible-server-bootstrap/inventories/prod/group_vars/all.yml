@@ -12,6 +12,5 @@ env_specific_packages:
 app_env: "Production"
 app_debug: false # no nerd data showing
 
-app_deploy_dir: /opt/containerized-webapp-cicd
-dockerhub_username: "barrawi"
+# removed deploy dir and username for docker to main group vars
 app_port: 8000
