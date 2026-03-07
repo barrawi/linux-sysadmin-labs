@@ -6,9 +6,9 @@
     type: ed25519
     comment: "github-actions-deploy"
     force: no # wont overwrite if already there
-  delegate_to: localhost # run on host machine too
+  delegate_to: localhost # run on host machine instead of the vms
   become: no
-  run_once: true # only generate once 
+  run_once: true # only generate once (we have multiple host)
 
 - name: Read public key
   ansible.builtin.slurp:
