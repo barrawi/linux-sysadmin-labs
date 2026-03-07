@@ -57,14 +57,16 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
 
-      - name: Deploy to vms via ansible
+      - name: Deploy to VMs via Ansible
+        env:
+          TAILSCALE_API_KEY: ${{ secrets.TAILSCALE_API_KEY }}
         run: |
           cd ../ansible-server-bootstrap
           echo "${{ secrets.VM_SSH_KEY }}" > /tmp/deploy_key
           echo "${{ secrets.ANSIBLE_VAULT_PASS }}" > /tmp/vault_pass
           chmod 600 /tmp/deploy_key
           chmod 600 /tmp/vault_pass
-          ansible-playbook -i inventories/prod/hosts.ini deploy_container.yml \
+          ansible-playbook -i inventories/tailscale_inventory.py deploy_container.yml \
             --private-key /tmp/deploy_key \
             --user devops \
             --vault-password-file /tmp/vault_pass \
