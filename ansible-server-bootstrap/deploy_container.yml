@@ -15,5 +15,10 @@
       ansible.builtin.command:
         cmd: podman-compose up -d --force-recreate
         chdir: "{{ app_deploy_dir }}"
+      become: yes
+      environment:
+        XDG_RUNTIME_DIR: "/run/user/{{ hostvars[inventory_hostname]['ansible_user_uid'] | default('1000') }}"
       become_user: "{{ admin_username }}"
+      register: compose_output
+      ignore_errors: no
 

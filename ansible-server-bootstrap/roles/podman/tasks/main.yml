@@ -9,7 +9,10 @@
 
 - name: Install podman-compose via pip
   ansible.builtin.pip:
-    name: podman-compose
+    name: 
+      - podman-compose
+      - PyYAML
+    executable: pip3
     state: present
 
 - name: Start and enable podman socket
@@ -41,7 +44,7 @@
 
 - name: Deploy .env to vm 
   ansible.builtin.template:
-    src: env.j2
+    src: .env.j2
     dest: "{{ app_deploy_dir }}/.env"
     owner: "{{ admin_username }}"
     group: "{{ admin_username }}"
