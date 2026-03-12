@@ -14,6 +14,7 @@
       - git
       - firewalld
     state: present # only install if not installed already
+    allowerasing: true # for amazon linux
 
 - name: Install env specific Utilities
   ansible.builtin.dnf:

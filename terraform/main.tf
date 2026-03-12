@@ -116,9 +116,26 @@ resource "aws_instance" "prod" {
   vpc_security_group_ids = [aws_security_group.prod.id]
   key_name               = var.key_name
 
+  # set up hostname 
+  # create user devops and adds it to wheel 
+  # sets up ssh key for devops user 
+  # allows passwordless sudo 
+  # install and join vpn
   user_data = <<-EOF
     #!/bin/bash 
     hostnamectl set-hostname prod-cloud0${count.index + 1}
+    
+    useradd -m -s /bin/bash devops
+    usermod -aG wheel devops
+
+    mkdir -p /home/devops/.ssh
+    chmod 700 /home/devops/.ssh
+    cp /home/ec2-user/.ssh/authorized_keys /home/devops/.ssh/authorized_keys
+    chown -R devops:devops /home/devops/.ssh
+    chmod 600 /home/devops/.ssh/authorized_keys
+
+    echo "devops ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/devops
+
     curl -fsSL https://tailscale.com/install.sh | sh  
     tailscale up --authkey=${var.tailscale_authkey} --advertise-tags=tag:prod
     EOF
