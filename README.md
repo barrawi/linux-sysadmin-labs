@@ -11,6 +11,15 @@ The goal of these labs is to demonstrate a production-ready approach to managing
 
 ## Core projects
 
+### Cloud Infrastructure Provisioning (Terraform + AWS)
+Terraform module that provisions a fully networked, Tailscale connected 3 node RHEL 10 cluster on AWS from scratch. A single `terraform apply` delivers production-ready nodes that are immediately reachable by the Ansible pipeline, no manual SSH, no IP files to maintain.
+- **Infrastructure as Code**: VPC, public subnet, internet gateway, security groups, and 3 EC2 instances defined entirely in HCL — reproducible and version-controlled.
+- **First-Boot Automation**: user_data script handles the bootstrap problem — creates the `devops` user, configures SSH, and joins Tailscale automatically on launch before Ansible ever connects.
+- **Zero Static Configuration**: Destroy and re-apply as many times as needed. The dynamic inventory reconnects to new nodes automatically via Tailscale tags — no IP updates required.
+- **Free Tier Aware**: Configured for t2.micro instances within AWS free tier limits.
+
+---
+
 ### Automated Server Bootstrap (Ansible)
 A multi role project that transforms a fresh RHEL installation into a hardened, production-ready node and serves as the deployment backbone for the containerized webapp.
 - **Zero-Trust Networking**: Integrated Tailscale (WireGuard) to establish secure, encrypted management tunnels. All CI/CD traffic flows through the Tailscale mesh — VMs are completely dark on the public LAN.
@@ -64,15 +73,17 @@ A custom utility built to facilitate secure code auditing and AI collaboration.
 
 | Category | Tools |
 |---|---|
-| Operating Systems | Red Hat / CentOS 9 Stream, Arch Linux (Controller) |
+| Operating Systems | Red Hat Enterprise Linux 10, CentOS 9 Stream, Arch Linux (Controller) |
+| Cloud | AWS (EC2, VPC, Security Groups) |
+| Infrastructure as Code | Terraform |
 | Automation | Ansible (Roles, Playbooks, Vault, Handlers, Dynamic Inventory) |
 | Containerization | Docker, Podman, podman-compose |
 | CI/CD | GitHub Actions |
 | Container Registry | Docker Hub |
 | Security | Tailscale/WireGuard, SSH Hardening, Firewalld, Ansible Vault |
-| Languages | Python (Flask, pytest), Bash |
+| Languages | Python (Flask, pytest), Bash, HCL |
 | Databases | Redis |
-| Networking | Zero Trust VPN Overlay, mDNS, Zone-based Firewall |
+| Networking | Zero Trust VPN Overlay, Zone-based Firewall, AWS VPC |
 
 ---
 
