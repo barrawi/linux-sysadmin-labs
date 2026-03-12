@@ -45,11 +45,12 @@ def get_devices():
 # loops through every device tailscale returned searching gor the tag
 def build_inventory(devices):
     hosts = {}
+    groups = {}
 
     for device in devices:
         # only include devices tagged as prod
         tags = device.get("tags", [])
-        if PROD_TAG not in tags:
+        if not tags:
             continue
 
         name = device["hostname"]
@@ -60,9 +61,18 @@ def build_inventory(devices):
             "ansible_user": ANSIBLE_USER,  # dehardcoded
         }
 
+        # add host to a new group per tag
+        for tag in tags:
+            group_name = tag.replace(":", "_")  # remove colons for ansible
+            if group_name not in groups:
+                groups[group_name] = {"hosts": []}
+            groups[group_name]["hosts"].append(name)
+
+    groups["webservers"] = {"hosts": list(hosts.keys())}
+
     # grab hostname and ip, add to dictionary
     inventory = {
-        "webservers": {"hosts": list(hosts.keys())},
+        **groups,
         "_meta": {"hostvars": hosts},
     }
     return inventory

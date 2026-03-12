@@ -1,3 +1,5 @@
 ---
-app_env: production
-app_debug: false
+env_label: "production"
+nginx_port: 80
+allow_root_ssh: "no"
+app_port: 8000

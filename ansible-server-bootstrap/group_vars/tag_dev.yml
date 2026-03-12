@@ -1,0 +1,5 @@
+app_env: "Development"
+app_debug: true
+env_specific_packages:
+  - htop
+  - strace

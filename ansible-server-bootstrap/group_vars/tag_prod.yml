@@ -1,0 +1,6 @@
+app_env: "Production"
+app_debug: false
+env_specific_packages:
+  - cockpit
+  - logwatch
+  - setroubleshoot-server
