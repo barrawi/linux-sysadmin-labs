@@ -20,3 +20,10 @@ venv/
 
 # Ignore .env from docker
 .env
+
+# terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+.terraform.lock.hcl

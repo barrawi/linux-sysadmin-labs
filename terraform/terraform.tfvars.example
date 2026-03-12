@@ -1,0 +1,3 @@
+ami_id       = "ami-xxxxxxxxxxxxxxxxx"
+key_name     = "your-key-pair-name"
+project_name = "devops-lab"

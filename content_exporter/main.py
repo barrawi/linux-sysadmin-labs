@@ -24,6 +24,7 @@ include = {
     ".html",
     ".github",
     ".txt",
+    ".tf",
 }  # files to include
 no_include = {
     "password",
