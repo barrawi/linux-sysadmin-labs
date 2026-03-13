@@ -4,10 +4,6 @@
   hosts: webservers 
   become: yes
 
-  pre_tasks:
-    name: Skip deployment if no hosts are avaible
-    meta: end_play
-    when: groups['webservers'] | default([]) | length == 0 # skip if no hosts are up
   tasks:
     - name: Pull latest image from Docker Hub
       containers.podman.podman_image:
