@@ -7,6 +7,7 @@ Wilberth Barrantes Calderon
 
 import fnmatch
 import os
+import sys
 
 output_file = "content_exporter.txt"
 include = {
@@ -126,5 +127,13 @@ def generate_context(root_dir):
 
 
 if __name__ == "__main__":
-    generate_context(".")
+
+    # Now able to target specific dir
+    target_dir = sys.argv[1] if len(sys.argv) > 1 else "."
+
+    if not os.path.isdir(target_dir):
+        print(f"Error: '{target_dir}' is not a valid directory.")
+        sys.exit(1)
+
+    generate_context(target_dir)
     print(f"Content exported to {output_file}. Verified against .gitignore...")
