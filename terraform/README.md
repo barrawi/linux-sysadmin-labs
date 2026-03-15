@@ -27,6 +27,8 @@ Once `terraform apply` completes, all 3 nodes appear in your Tailscale admin con
 ## Usage
 
 ```bash
+cd terraform/aws
+
 # First time only
 terraform init
 
@@ -69,7 +71,7 @@ cp terraform.tfvars.example terraform.tfvars
 The user_data script runs on first boot and handles the bootstrap problem, how does Ansible reach a machine it has never seen before?
 
 1. Terraform launches the instance
-2. user_data creates the `devops` user, copies SSH keys from `ec2-user`, and runs `tailscale up --authkey=... --advertise-tags=tag:prod`
+2. user_data creates the `devops` user, copies SSH keys from `ec2-user`, and runs `tailscale up --auth-key=... --advertise-tags=tag:prod`
 3. The node joins the Tailscale mesh and becomes immediately reachable
 4. The dynamic inventory script (`inventories/tailscale_inventory.py`) queries the Tailscale API, discovers all `tag:prod` nodes, and returns them as an Ansible host group
 5. `ansible-playbook -i inventories/tailscale_inventory.py site.yml` configures everything from there
@@ -82,11 +84,12 @@ No static IP files. No manual intervention. Destroy and re-apply as many times a
 
 ```
 terraform/
-├── main.tf                  # VPC, subnet, security group, EC2 instances, user_data
-├── variables.tf             # Variable declarations with types and descriptions
-├── outputs.tf               # Public IPs and hostnames after apply
-├── terraform.tfvars         # Your actual values (gitignored)
-└── terraform.tfvars.example # Template for the repo
+├── aws/
+    ├── main.tf                  # VPC, subnet, security group, EC2 instances, user_data
+    ├── variables.tf             # Variable declarations with types and descriptions
+    ├── outputs.tf               # Public IPs and hostnames after apply
+    ├── terraform.tfvars         # Your actual values (gitignored)
+    └── terraform.tfvars.example # Template for the repo
 ```
 
 ---
