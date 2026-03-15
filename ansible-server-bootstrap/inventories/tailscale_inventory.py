@@ -8,7 +8,6 @@ Wilberth Barrantes
 import json
 import os
 import sys
-import urllib.error
 import urllib.request
 
 # read enviroment vars
@@ -33,9 +32,6 @@ def get_devices():
     request = urllib.request.Request(url, headers=headers)
     try:
         with urllib.request.urlopen(request, timeout=5) as response:
-            print(
-                file=sys.stderr,
-            )
             return json.loads(response.read().decode()).get("devices", [])
     except Exception as e:
         print(f"ERROR: Fetching devices failed: {e}", file=sys.stderr)
