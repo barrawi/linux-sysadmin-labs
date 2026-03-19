@@ -19,6 +19,25 @@ spec:
           image: barrawi/containerized-webapp:latest 
           ports:
             - containerPort: 5000
+          resources: 
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          livenessProbe: 
+            httpGet: 
+              path: / 
+              port: 5000 
+            initialDelaySeconds: 10 
+            periodSeconds: 15 
+          readinessProbe: 
+            httpGet: 
+              path: / 
+              port: 5000 
+            initialDelaySeconds: 5 
+            periodSeconds: 10
           envFrom:
             - configMapRef:
                 name: flask-config
