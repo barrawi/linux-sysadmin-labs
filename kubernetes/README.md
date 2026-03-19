@@ -12,6 +12,7 @@ This folder contains the Kubernetes manifests for deploying the containerized Fl
 - **ConfigMap** — injects environment configuration into containers
 - **Resource limits** —  CPU and memory requests/limits defined for all containers
 - **Health probes** —  liveness and readiness probes on Flask (HTTP) and Redis (TCP)
+- **Prometheus + Grafana** — monitoring stack deployed via Helm, scraping metrics from all pods and Kubernetes components.
  
 ---
  
@@ -31,7 +32,25 @@ Add the local domain to your hosts file:
 ```bash
 echo "$(minikube ip) flask.local" | sudo tee -a /etc/hosts
 ```
- 
+Install Helm
+```bash
+sudo pacman -S helm
+```
+Add Prometheus community charts
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+```
+Install monitoring stack
+```bash
+helm install monitoring prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --create-namespace
+```
+Add Grafana to hosts file
+```bash
+echo "$(minikube ip) grafana.local" | sudo tee -a /etc/hosts
+```
 ---
  
 ## Usage
@@ -67,12 +86,13 @@ kubectl delete -f .
  
 ```
 kubernetes/
-├── configmap.yml          # App environment variables
-├── redis-deployment.yml   # Redis container definition
-├── redis-service.yml      # Redis internal ClusterIP service
-├── flask-deployment.yml   # Flask app, 2 replicas
-├── flask-service.yml      # Flask NodePort service
-└── ingress.yml            # Nginx Ingress routing rules
+├── configmap.yml           # App environment variables
+├── redis-deployment.yml    # Redis container definition
+├── redis-service.yml       # Redis internal ClusterIP service
+├── flask-deployment.yml    # Flask app, 2 replicas
+├── flask-service.yml       # Flask NodePort service
+├── ingress.yml             # Nginx Ingress routing rules
+└── monitoring-ingress.yml  # Grafana Ingress routing rules
 ```
  
 ---
@@ -92,6 +112,8 @@ kubernetes/
 **Resource management** —  CPU and memory requests/limits defined for every container. Requests guarantee minimum resources for scheduling, limits prevent any single container from consuming excessive resources.
 
 **Health probes** — liveness probes restart unresponsive pods automatically. Readiness probes remove pods from the load balancer during startup or degraded states, ensuring traffic only reaches healthy instances.
+
+**Observability** ─ Prometheus and Grafana deployed via Helm into a dedicated `monitoring` namespace. Prometheus scrapes container and Kubernetes metrics via kubelet/cAdvisor. Grafana visualizes CPU, memory, and resource usage per pod and namespace in real time.
 
 ---
  

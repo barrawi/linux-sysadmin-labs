@@ -40,6 +40,7 @@ The containerized Flask + Redis application deployed to a Kubernetes cluster —
 - **Nginx Ingress**: External traffic routed through an Nginx Ingress controller on port 80 — no hardcoded NodePorts or manual Nginx configuration required.
 - **ConfigMap-driven Configuration**: Environment variables decoupled from the container image and injected at runtime — configuration changes without image rebuilds.
 - **Rolling Updates**: Kubernetes replaces pods one at a time during deployments — zero downtime updates out of the box.
+- **Observability**: Prometheus and Grafana deployed via Helm into a dedicated `monitoring` namespace. Real-time metrics scraping from all pods and Kubernetes components via kubelet/cAdvisor, visualized in Grafana dashboards.
 
 ---
 
@@ -103,6 +104,7 @@ A custom utility built to facilitate secure code auditing and AI collaboration.
 | Languages | Python (Flask, pytest), Bash, HCL |
 | Databases | Redis |
 | Networking | Zero Trust VPN Overlay, Zone-based Firewall, AWS VPC, Kubernetes Ingress |
+| Monitoring | Prometheus, Grafana, Helm |
 
 ---
 
@@ -119,7 +121,6 @@ A custom utility built to facilitate secure code auditing and AI collaboration.
 ## Roadmap
 
 - Expand test coverage with Testinfra for post-deployment server validation.
-- Add Prometheus and Grafana for observability and monitoring.
 - Integrate Kubernetes deployment into the GitHub Actions CI/CD pipeline.
 
 ---
