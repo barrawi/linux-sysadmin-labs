@@ -17,6 +17,7 @@ Terraform module that provisions a fully networked, Tailscale connected 3 node R
 - **First-Boot Automation**: user_data script handles the bootstrap problem — creates the `devops` user, configures SSH, and joins Tailscale automatically on launch before Ansible ever connects.
 - **Zero Static Configuration**: Destroy and re-apply as many times as needed. The dynamic inventory reconnects to new nodes automatically via Tailscale tags — no IP updates required.
 - **Free Tier Aware**: Configured for t2.micro instances within AWS free tier limits.
+<img width="886" height="95" alt="image" src="https://github.com/user-attachments/assets/dbfe25e9-f61b-4255-81fa-13e854d06ce7" />
 
 ---
 
@@ -41,6 +42,7 @@ The containerized Flask + Redis application deployed to a Kubernetes cluster —
 - **ConfigMap-driven Configuration**: Environment variables decoupled from the container image and injected at runtime — configuration changes without image rebuilds.
 - **Rolling Updates**: Kubernetes replaces pods one at a time during deployments — zero downtime updates out of the box.
 - **Observability**: Prometheus and Grafana deployed via Helm into a dedicated `monitoring` namespace. Real-time metrics scraping from all pods and Kubernetes components via kubelet/cAdvisor, visualized in Grafana dashboards.
+<img width="791" height="92" alt="image" src="https://github.com/user-attachments/assets/82b3d0f9-8873-40e0-9524-c91ba4f3ada5" />
 
 ---
 
@@ -65,6 +67,7 @@ Shell scripts that replace Terraform for local KVM VM provisioning — spin up a
 - **Parity with Cloud**: Local VMs join the same Tailscale mesh as cloud nodes — the dynamic Ansible inventory discovers them automatically with no configuration changes.
 - **Clean Teardown**: `destroy-local-vms.sh` stops, undefines, and removes all VM disks cleanly.
 - **Configurable Count**: Pass a number to create or destroy exactly as many VMs as needed.
+<img width="619" height="24" alt="image" src="https://github.com/user-attachments/assets/8513caed-d5d0-4fc4-8d8e-f7ae5dd8a6cd" />
 
 ---
 
