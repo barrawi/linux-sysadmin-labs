@@ -73,3 +73,34 @@ jobs:
             --user devops \
             --vault-password-file /tmp/vault_pass \
             -e "ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
+
+    validate-kubernetes: 
+    runs-on: ubuntu-latest
+    needs: test-and-build 
+    steps: 
+      - name: Checkout repo 
+        uses: actions/checkout@v4 
+
+      - name: Create kind cluster
+        uses: helm/kind-actions@v1.10.0
+
+      - name: Apply Kubernetes manifests 
+        run: |
+          kubectl apply -f kubernetes/configmap.yml
+          kubectl apply -f kubernetes/redis-deployment.yml
+          kubectl apply -f kubernetes/redis-service.yml
+          kubectl apply -f kubernetes/flask-deployment.yml
+          kubectl apply -f kubernetes/flask-service.yml
+
+      - name: Wait for pods to be ready 
+        run: | 
+          kubectl wait --for=condition=ready pod \ 
+            -l app=flask \
+            --timeout=120s
+          kubectl wait --for=condition=ready pod \
+            -l app=redis \
+            --timeout=120s 
+
+      - name: Verify all pods are running 
+        run: kubectl get pods
+
