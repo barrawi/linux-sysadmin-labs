@@ -29,6 +29,7 @@ A multi role project that transforms a fresh RHEL installation into a hardened, 
 - **Automated Deployment Key Management**: Ansible generates an ed25519 SSH key pair locally, distributes the public key to all prod VMs, and stores the private key for use by GitHub Actions — zero manual key management.
 - **Continuous Deployment**: GitHub Actions SSHes into all 3 prod VMs via Tailscale on every successful push to `main`, pulls the latest image from Docker Hub, and restarts the stack with podman-compose.
 - **Web Orchestration**: Dynamic deployment of Nginx using Jinja2 templates and Ansible Facts.
+- **Post-Deployment Validation**: Testinfra test suite verifies every Ansible role applied correctly — SSH hardening, firewall, Nginx, Tailscale, Podman, and user configuration confirmed across all nodes after every provisioning run.
 
 <img width="1275" height="55" alt="image" src="https://github.com/user-attachments/assets/f2ba7d06-18f1-43dd-ac68-8ce3a118f196" />
 
@@ -102,6 +103,7 @@ A custom utility built to facilitate secure code auditing and AI collaboration.
 | Automation | Ansible (Roles, Playbooks, Vault, Handlers, Dynamic Inventory) |
 | Containerization | Docker, Podman, podman-compose |
 | CI/CD | GitHub Actions |
+| Testing | pytest, Testinfra, fakeredis |
 | Container Registry | Docker Hub |
 | Security | Tailscale/WireGuard, SSH Hardening, Firewalld, Ansible Vault |
 | Languages | Python (Flask, pytest), Bash, HCL |
@@ -123,7 +125,6 @@ A custom utility built to facilitate secure code auditing and AI collaboration.
 
 ## Roadmap
 
-- Expand test coverage with Testinfra for post-deployment server validation.
 - Integrate Kubernetes deployment into the GitHub Actions CI/CD pipeline.
 
 ---

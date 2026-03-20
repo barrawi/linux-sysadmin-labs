@@ -30,6 +30,9 @@ ansible-server-bootstrap/
 ├── deploy_container.yml            # CD playbook — pulls and restarts containers
 ├── ansible.cfg
 ├── requirements.yml
+├── tests/
+│   ├── test_bootstrap.py 
+│   └── conftest.py
 ├── group_vars/
 │   └── all.yml                     # Global variables (vault encrypted)
 ├── inventories/
@@ -184,6 +187,28 @@ deploy_container.yml pulls latest image and restarts stack on all 3 VMs
 ```
 
 GitHub Secrets required: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `TAILSCALE_AUTHKEY`, `TAILSCALE_API_KEY`, `VM_SSH_KEY`, `ANSIBLE_VAULT_PASS`.
+
+## Post-Deployment Validation (Testinfra)
+
+After Ansible runs, Testinfra verifies the configuration was applied correctly across all nodes — turning assumptions into assertions.
+
+**Run tests:**
+```bash
+export ANSIBLE_VAULT_PASS=your-vault-password
+pytest tests/
+```
+
+**What gets tested on every node:**
+- devops user exists and belongs to the wheel group
+- SSH root login is disabled
+- SSH password authentication is disabled
+- sshd is running and enabled
+- firewalld is running and enabled
+- Nginx is running and enabled
+- Tailscale daemon is running and enabled
+- Podman is installed
+
+The vault password is never stored on disk — it's read from the `ANSIBLE_VAULT_PASS` environment variable at runtime via `vault_password_script.py`.
 
 ## Technical Challenges & Solutions
 
