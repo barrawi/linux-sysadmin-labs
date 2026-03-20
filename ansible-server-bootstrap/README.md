@@ -179,6 +179,10 @@ pytest tests pass
     ↓
 Docker image built and pushed to Docker Hub
     ↓
+Kind cluster spins up    
+    ↓
+Kubernetes manifests applied and validated
+    ↓
 Tailscale GitHub Action connects the runner to the mesh
     ↓
 tailscale_inventory.py discovers prod VMs dynamically

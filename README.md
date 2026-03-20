@@ -43,6 +43,7 @@ The containerized Flask + Redis application deployed to a Kubernetes cluster —
 - **ConfigMap-driven Configuration**: Environment variables decoupled from the container image and injected at runtime — configuration changes without image rebuilds.
 - **Rolling Updates**: Kubernetes replaces pods one at a time during deployments — zero downtime updates out of the box.
 - **Observability**: Prometheus and Grafana deployed via Helm into a dedicated `monitoring` namespace. Real-time metrics scraping from all pods and Kubernetes components via kubelet/cAdvisor, visualized in Grafana dashboards.
+- **CI/CD Validated**: Kubernetes manifests are automatically applied to a kind cluster on every push via GitHub Actions — ensuring manifests are always valid and pods start correctly before any code reaches production.
 <img width="791" height="92" alt="image" src="https://github.com/user-attachments/assets/82b3d0f9-8873-40e0-9524-c91ba4f3ada5" />
 
 ---
@@ -50,7 +51,7 @@ The containerized Flask + Redis application deployed to a Kubernetes cluster —
 ### Containerized Web App with CI/CD Pipeline
 A Flask web application containerized with Docker and deployed through a fully automated CI/CD pipeline to a 3 node production cluster.
 - **Containerization**: Multi stage Docker build using RHEL UBI9 minimal image to reduce attack surface and image size. App runs as a non privileged user.
-- **CI/CD Pipeline**: GitHub Actions workflow automatically runs tests, builds and pushes the Docker image, and deploys to all 3 prod VMs on every push to `main` — broken code is caught before it can be deployed.
+- **CI/CD Pipeline**: GitHub Actions workflow runs tests, validates Kubernetes manifests against a live kind cluster, builds and pushes the Docker image, and deploys to all 3 prod VMs via Tailscale on every push to `main` — broken code and broken infrastructure config are both caught before deployment.
 - **Automated Image Publishing**: Pipeline pushes the production image to Docker Hub on every successful build. Credentials managed securely via GitHub Secrets, never stored in code.
 - **Test-Driven**: pytest test suite with fakeredis for isolated, dependency free testing. Redis connection is injected via Flask config to keep test code fully separate from production code.
 - **Redis Integration**: Redis health check exposed via `/json` endpoint. Graceful fallback handling ensures the app never crashes when Redis is unavailable.
@@ -125,7 +126,7 @@ A custom utility built to facilitate secure code auditing and AI collaboration.
 
 ## Roadmap
 
-- Integrate Kubernetes deployment into the GitHub Actions CI/CD pipeline.
+- Thinking about it...
 
 ---
 
